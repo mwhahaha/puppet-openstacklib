@@ -82,7 +82,6 @@ describe 'openstacklib::wsgi::apache' do
           'threads'   => global_facts[:processorcount],
         },
         'wsgi_application_group'      => '%{GLOBAL}',
-        'wsgi_pass_authorization'     => 'On',
         'require'                     => 'File[keystone_wsgi]'
       )}
       it { is_expected.to contain_file("#{platform_parameters[:httpd_ports_file]}") }
@@ -94,7 +93,7 @@ describe 'openstacklib::wsgi::apache' do
           :wsgi_script_dir         => '/var/www/cgi-bin/keystone',
           :wsgi_script_file        => 'main',
           :wsgi_script_source      => '/usr/share/keystone/keystone.wsgi',
-          :wsgi_pass_authorization => 'Off',
+          :wsgi_pass_authorization => 'On',
           :servername              => 'dummy.host',
           :bind_host               => '10.42.51.1',
           :bind_port               => 4142,
@@ -121,7 +120,7 @@ describe 'openstacklib::wsgi::apache' do
         'wsgi_process_group'          => 'keystone_wsgi',
         'wsgi_script_aliases'         => { '/' => "/var/www/cgi-bin/keystone/main" },
         'wsgi_application_group'      => '%{GLOBAL}',
-        'wsgi_pass_authorization'     => 'Off',
+        'wsgi_pass_authorization'     => 'On',
         'require'                     => 'File[keystone_wsgi]',
         'custom_fragment'             => 'LimitRequestFieldSize 81900',
       )}

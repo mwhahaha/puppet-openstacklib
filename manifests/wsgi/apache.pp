@@ -122,7 +122,7 @@
 # [*wsgi_pass_authorization*]
 #   (optional) Whether HTTP authorisation headers are passed through to a WSGI
 #   script when the equivalent HTTP request headers are present.
-#   Defaults to 'On'
+#   Defaults to undef
 #
 # [*vhost_custom_fragment*]
 #   (optional) Passes a string of custom configuration
@@ -154,7 +154,7 @@ define openstacklib::wsgi::apache (
   $wsgi_script_file        = undef,
   $wsgi_script_source      = undef,
   $wsgi_application_group  = '%{GLOBAL}',
-  $wsgi_pass_authorization = 'On',
+  $wsgi_pass_authorization = undef,
   $vhost_custom_fragment   = undef,
 ) {
 
