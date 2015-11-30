@@ -97,7 +97,7 @@ class Puppet::Provider::Openstack < Puppet::Provider
           end
           break
         rescue Puppet::ExecutionFailure => exception
-          raise Puppet::Error::OpenstackUnauthorizedError, 'Could not authenticate' if exception.message =~ /HTTP 401/
+          raise Puppet::Error::OpenstackUnauthorizedError, 'Could not authenticate' if exception.message =~ /HTTP 40[13]/
           raise exception if current_time > end_time
           raise exception if no_retry_actions.include? action
           sleep retry_sleep
