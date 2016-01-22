@@ -42,7 +42,6 @@
 
 define openstacklib::db::mysql (
   $password_hash,
-  $mysql_module   = '0.3',
   $dbname         = $title,
   $user           = $title,
   $host           = '127.0.0.1',
@@ -52,7 +51,6 @@ define openstacklib::db::mysql (
   $privileges     = 'ALL',
 ) {
 
-  if ($mysql_module >= 2.2){
     include ::mysql::client
 
     mysql_database { $dbname:
@@ -61,23 +59,11 @@ define openstacklib::db::mysql (
       collate => $collate,
       require => [ Class['mysql::server'], Class['mysql::client'] ],
     }
-  } else {
-
-    require mysql::python
-    mysql::db { $dbname:
-      user     => $user,
-      password => $password_hash,
-      host     => $host,
-      charset  => $charset,
-      require  => Class['mysql::config'],
-    }
-  }
 
   $allowed_hosts_list = unique(concat(any2array($allowed_hosts), [$host]))
   $real_allowed_hosts = prefix($allowed_hosts_list, "${dbname}_")
 
   openstacklib::db::mysql::host_access { $real_allowed_hosts:
-    mysql_module  => $mysql_module,
     user          => $user,
     password_hash => $password_hash,
     database      => $dbname,
